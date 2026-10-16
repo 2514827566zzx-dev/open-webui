@@ -1,0 +1,7 @@
+{
+  "name": "Open WebUI",
+  "default_port": "3102",
+  "health_path": "/",
+  "secret_keys": ["WEBUI_SECRET_KEY"],
+  "ollama_model": "qwen3:0.6b"
+}

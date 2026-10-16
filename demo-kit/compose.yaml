@@ -1,0 +1,25 @@
+name: open-webui-demo
+
+services:
+  ollama:
+    image: ollama/ollama:0.40.5
+    restart: unless-stopped
+    volumes:
+      - ollama_data:/root/.ollama
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:v0.12.3
+    restart: unless-stopped
+    environment:
+      WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY:?Run python3 start.py first}
+      OLLAMA_BASE_URL: http://ollama:11434
+    ports:
+      - "${BIND_HOST:-127.0.0.1}:${DEMO_PORT:-3102}:8080"
+    volumes:
+      - webui_data:/app/backend/data
+    depends_on:
+      - ollama
+
+volumes:
+  ollama_data:
+  webui_data:
